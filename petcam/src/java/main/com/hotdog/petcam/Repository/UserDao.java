@@ -12,8 +12,8 @@ public class UserDao {
 	@Autowired
 	private SqlSession sqlSession;
 	
-	public void join(UserVo userVo){
-		sqlSession.insert("user.join", userVo);
-	}
-	
+//	public void join(UserVo userVo){
+//		sqlSession.insert("user.join", userVo);
+//	}
+//	
 }

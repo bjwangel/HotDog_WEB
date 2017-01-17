@@ -17,9 +17,9 @@ public class UserService {
 		
 	}
 	
-	public void join(UserVo userVo){
-		userDao.join(userVo);
-	}
+//	public void join(UserVo userVo){
+//		userDao.join(userVo);
+//	}
 	
 	public void sendCode(String email,int code){
 		SendMail sendMail = new SendMail();

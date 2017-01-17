@@ -10,9 +10,9 @@ import com.hotdog.petcam.Service.UserService;
 @RequestMapping("/user")
 public class UserController {
 
-	@Autowired
-	private UserService userService;
-	
+//	@Autowired 
+//	private UserService userService;
+//	
 	@RequestMapping("/test")
 	public String test(){
 		return "user/joinform2";
