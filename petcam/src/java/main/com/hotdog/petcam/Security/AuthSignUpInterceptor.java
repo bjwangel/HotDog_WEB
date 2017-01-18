@@ -21,8 +21,14 @@ public class AuthSignUpInterceptor extends HandlerInterceptorAdapter{
 		UserVo userVo = new UserVo();
 		int code=new Random().nextInt(100);
 		
+		
+		String email = request.getParameter("email");
+		String password = request.getParameter("password");
+		
+		
 		userVo.setEmail(request.getParameter("email"));
 		userVo.setPass_word(request.getParameter("password"));
+		
 		
 		// TempUser 에게 이메일을 보낸다.
 		ApplicationContext ac = WebApplicationContextUtils.getWebApplicationContext(request.getServletContext());

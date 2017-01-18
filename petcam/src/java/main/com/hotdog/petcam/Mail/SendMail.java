@@ -1,4 +1,4 @@
-package com.hotdog.petcam.MailCheck;
+package com.hotdog.petcam.Mail;
 
 
 import java.util.Properties;
@@ -32,13 +32,15 @@ public class SendMail {
 	            Session session = Session.getDefaultInstance(properties, auth);
 	            session.setDebug(true); // 메일을 전송할 때 상세한 상황을 콘솔에 출력한다.
 	            MimeMessage msg = new MimeMessage(session);
+	            
+	            System.out.println("********************* ");
 	 
-	            msg.setSubject("메일 제목");
+	            msg.setSubject("<< HOTDOG TEAM >>  Check your Code !!");
 	            Address fromAddr = new InternetAddress("hotdog.bit2017@gmail.com"); // 보내는사람 EMAIL
 	            msg.setFrom(fromAddr);
 	            Address toAddr = new InternetAddress(email);    //받는사람 EMAIL
 	            msg.addRecipient(Message.RecipientType.TO, toAddr);
-	            msg.setContent("Check your Code :" + code, "text/plain;charset=KSC5601"); //메일 전송될 내용
+	            msg.setContent("your Sign up Code is...  :  " + code, "text/plain;charset=KSC5601"); //메일 전송될 내용
 	            Transport.send(msg);
 	            
 	            
@@ -51,7 +53,7 @@ public class SendMail {
 	    		
 	        public PasswordAuthentication getPasswordAuthentication() {
 	            return  new PasswordAuthentication("hotdog.bit2017", "hotdogpetcam"); // @gmail.com 제외한 계정 ID, PASS
-	 
+	            
 	        }
 	    }
 	}

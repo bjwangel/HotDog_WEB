@@ -3,7 +3,7 @@ package com.hotdog.petcam.Service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.hotdog.petcam.MailCheck.SendMail;
+import com.hotdog.petcam.Mail.SendMail;
 import com.hotdog.petcam.Repository.UserDao;
 import com.hotdog.petcam.VO.UserVo;
 
@@ -24,5 +24,15 @@ public class UserService {
 	public void sendCode(String email,int code){
 		SendMail sendMail = new SendMail();
 		sendMail.sendMail(email, code);
+	}
+	
+	public boolean checkCode(int inputCode,int code){
+		
+		if(inputCode==code){
+			return true;
+		}
+		else{
+			return false;
+		}
 	}
 }

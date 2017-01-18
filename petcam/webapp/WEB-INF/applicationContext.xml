@@ -19,7 +19,7 @@
 	<context:annotation-config />
 
 	<context:component-scan
-		base-package="com.hotdot.petcam.*">
+		base-package="com.hotdog.petcam.Service , com.hotdog.petcam.Repository">
 		<context:include-filter type="annotation"
 			expression="org.springframework.stereotype.Repository" />
 		<context:include-filter type="annotation"

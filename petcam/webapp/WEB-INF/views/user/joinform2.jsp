@@ -32,34 +32,62 @@
 </head>
     
     <script>
-		
-    	
+    
+    	var email;
+    	var password;
+    	var code;
     
     	$(function(){
     		
 // 			회원가입 폼    		
-    		$("#joinform").submit(function() {
+    		$("#joinform").submit(function(event) {
+    			event.preventDefault();
+    			
+    			var formData = new FormData();
+	                email=$("#inputEmail").val();
+	                password=$("#inputPassword").val();
+	                formData.append("email",email);
+                	formData.append("password",password);
+                	
+                	console.log(formData);
+                	
     			if($("#inputEmail").val()==""){
-					console.log("email empty");
-					alert("dsadsadaasdzxc!!!!!");
+					alert("이메일을 입력해주세요");
 					$("#inputEmail").focus();
 					return false;
 				}
 				if($("#inputPassword").val()==""){
-					console.log("password empty");
+					alert("패스워드를 입력해주세요");
 					$("#inputPassword").focus();
 					return false;
 				}
-				if($("#inputName").val()==""){
-					console.log("name empty");
-					$("#inputName").focus();
+				if($("#inputPassword").val()!=$("#inputPassword2").val()){
+					alert("입력한 비밀번호가 다릅니다.");
+					$("#inputPassword2").focus();
 					return false;
+					
 				}
-				console.log("check complete");
+				// 배열에 TempUser 정보 넣어서 JSON 으로 던지기         {"data":arr}
+				
+// 				var arr=[ $("#inputEmail").val() ,$("#inputPassword").val() ];
+    		
+				$.ajax({
+					url:"${pageContext.request.contextPath }/user/signupform",
+					type:"post",
+					data: formData , 
+					processData : false,
+		            contentType : false
+				})
+				
+					$("#CodeCheckModal").on("shown.bs.modal",function(){
+						console.log("체크 알람 ")
+						alert("입력하신 이메일에 인증 코드가 발송되었습니다.");
+					})
+				
 				return true;
 			});
     		
-//     		약관동의 체크
+			//  약관동의 체크
         	$("#joinNext").prop("disabled",true);
         	
     		$("#accessCheck").change(function(){
@@ -70,6 +98,42 @@
     				console.log("체크 풀림");
     				$("#joinNext").prop("disabled",true);
     			}
+    		})
+    		
+    		// 코드 체크
+    		$("#checkNext").prop("disabled",true);
+    		
+    		$("#inputCodeCheck").click(function(){
+    			code=$("#inputCode").val();
+            	
+    			if(id==""){
+    				return;
+    			}
+            	
+    			$.ajax({
+    				url:"${pageContext.request.contextPath}/user/checkcode?code="+code,
+    				type:"get",
+    				dataType:"json",
+    				data:"",
+    				success: function(response){
+    					
+   					// 통신에러
+   					if( response.result == "fail" ) {
+   						console.log( response.message );
+   						return;
+   					}
+					
+   					// 코드가 일치할 때
+					if(response.data=="ok"){
+						alert("코드가 일치합니다.");
+						$("#checkNext").prop("disabled",false);
+					}
+   					if(response.data=="no"){
+   						alert("코드가 일치하지 않습니다.")
+   					}
+    				}
+    			})
+    			
     		})
     	})
     </script>
@@ -126,6 +190,7 @@
     <button class="btn btn-primary" data-toggle="modal" data-target="#streamSecurity">Stream</button>
     
      <button class="btn btn-primary" data-toggle="modal" data-target="#accessTerms">join test</button>
+      
     
    
     <!--*******************   Modal   **********************-->
@@ -354,18 +419,18 @@
 	            	<div class="modal-body">
 		               <div class="form-group label-floating">
 		                        <label class="control-label">email</label>
-		                        <input id="inputEmail" type="email" class="form-control">
+		                        <input id="inputEmail" type="email" class="form-control" name="email">
 		               </div>
 		               <div class="form-group label-floating">
 		                        <label class="control-label">password</label>
-		                        <input id="inputPassword" type="text" class="form-control">
+		                        <input id="inputPassword" type="password" class="form-control" name="password">
 		               </div>
 		               <div class="form-group label-floating">
-		                        <label class="control-label">name</label>
-		                        <input id="inputName" type="text" class="form-control">
+		                        <label class="control-label">password</label>
+		                        <input id="inputPassword2" type="password" class="form-control">
 		               </div>
 		               
-		               <input type="submit" class="btn btn-success btn-simple" value="Join Test"/>
+		               <input type="submit"  class="btn btn-success btn-simple"  value="Join Test"/>
 					   <button type="button" class="btn btn-danger btn-simple" data-dismiss="modal">Close</button>
 					</div>
 				</form>
@@ -374,6 +439,41 @@
 		  </div>
 	   </div>
     </div>
+    
+    
+    <!-- Code Check Modal -->
+    <div class="modal fade" id="CodeCheckModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="false">
+	   <div class="modal-dialog">
+		  <div class="modal-content">
+            <div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+					<i class="material-icons">clear</i>
+				</button>
+				<h4 class="modal-title">Code Check</h4>
+			</div>
+			
+			<div id="check">
+				<form>
+	            	<div class="modal-body">
+	            	
+		               <div class="form-group label-floating">
+		               		
+		                        <label class="control-label">Input Your Code..</label>
+		                        <input id="inputCode" type="text" class="form-control" name="code">
+		                        
+		                        <button type="button" id="inputCodeCheck" class="btn btn-warning btn-simple" >Check</button>
+		               </div>
+		               
+		               <input id="checkNext" type="submit"  class="btn btn-success btn-simple" value="next"/>
+					   <button type="button" class="btn btn-danger btn-simple" data-dismiss="modal">Close</button>
+					</div>
+				</form>
+			</div>
+			
+		  </div>
+	   </div>
+    </div>
+    
     
     
     <!--  End Modal -->
