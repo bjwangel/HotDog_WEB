@@ -39,18 +39,17 @@
     
     	$(function(){
     		
+    		$("#joinNextButton").prop("disabled",true);
+    		
 // 			회원가입 폼    		
-    		$("#joinform").submit(function(event) {
-    			event.preventDefault();
+    		$("#sendMailButton").click(function() {
     			
     			var formData = new FormData();
-	                email=$("#inputEmail").val();
-	                password=$("#inputPassword").val();
-	                formData.append("email",email);
-                	formData.append("password",password);
-                	
-                	console.log(formData);
-                	
+                email=$("#inputEmail").val();
+                password=$("#inputPassword").val();
+                formData.append("email",email);
+            	formData.append("password",password);	
+    			
     			if($("#inputEmail").val()==""){
 					alert("이메일을 입력해주세요");
 					$("#inputEmail").focus();
@@ -79,10 +78,8 @@
 		            contentType : false
 				})
 				
-					$("#CodeCheckModal").on("shown.bs.modal",function(){
-						console.log("체크 알람 ")
-						alert("입력하신 이메일에 인증 코드가 발송되었습니다.");
-					})
+				alert("입력하신 이메일에 인증 코드가 발송되었습니다.");
+				$("#joinNextButton").prop("disabled",false);
 				
 				return true;
 			});
@@ -100,13 +97,14 @@
     			}
     		})
     		
-    		// 코드 체크
+    		//  코드 체크
     		$("#checkNext").prop("disabled",true);
     		
     		$("#inputCodeCheck").click(function(){
+    			
     			code=$("#inputCode").val();
             	
-    			if(id==""){
+    			if(code==""){
     				return;
     			}
             	
@@ -124,7 +122,7 @@
    					}
 					
    					// 코드가 일치할 때
-					if(response.data=="ok"){
+					if(response.data=="yes"){
 						alert("코드가 일치합니다.");
 						$("#checkNext").prop("disabled",false);
 					}
@@ -415,7 +413,6 @@
 			</div>
 			
 			<div id="joinform">
-				<form>
 	            	<div class="modal-body">
 		               <div class="form-group label-floating">
 		                        <label class="control-label">email</label>
@@ -430,10 +427,10 @@
 		                        <input id="inputPassword2" type="password" class="form-control">
 		               </div>
 		               
-		               <input type="submit"  class="btn btn-success btn-simple"  value="Join Test"/>
+		               <button type="button"  id="sendMailButton"class="btn btn-success btn-simple">Send Mail</button>
+		               <button type="button"  id="joinNextButton"class="btn btn-warning btn-simple" data-toggle="modal" data-target="#CodeCheckModal" >Next</button>
 					   <button type="button" class="btn btn-danger btn-simple" data-dismiss="modal">Close</button>
 					</div>
-				</form>
 			</div>
 			
 		  </div>
@@ -457,13 +454,11 @@
 	            	<div class="modal-body">
 	            	
 		               <div class="form-group label-floating">
-		               		
 		                        <label class="control-label">Input Your Code..</label>
 		                        <input id="inputCode" type="text" class="form-control" name="code">
-		                        
-		                        <button type="button" id="inputCodeCheck" class="btn btn-warning btn-simple" >Check</button>
 		               </div>
 		               
+		               <button type="button" id="inputCodeCheck" class="btn btn-warning btn-simple" >Check</button>
 		               <input id="checkNext" type="submit"  class="btn btn-success btn-simple" value="next"/>
 					   <button type="button" class="btn btn-danger btn-simple" data-dismiss="modal">Close</button>
 					</div>

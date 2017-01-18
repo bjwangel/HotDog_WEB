@@ -98,10 +98,6 @@
 			<bean class="com.hotdog.petcam.Security.AuthSignUpInterceptor" />
 		</mvc:interceptor>
 		<mvc:interceptor>
-			<mvc:mapping path="/user/signupcheck" />
-			<bean class="com.hotdog.petcam.Security.AuthSignUpInterceptor2" />
-		</mvc:interceptor>
-		<mvc:interceptor>
 			<mvc:mapping path="/**" />
 			<mvc:exclude-mapping path="/user/login" />
 			<mvc:exclude-mapping path="/user/logout" />

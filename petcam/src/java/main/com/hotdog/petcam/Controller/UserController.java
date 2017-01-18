@@ -27,9 +27,11 @@ public class UserController {
 	// 코드 체크 
 	@ResponseBody
 	@RequestMapping("/checkcode")
-	public JSONResult test2(@RequestParam( value="id", required=true, defaultValue="" ) int inputCode,
+	public Object test2(@RequestParam( value="code", required=true, defaultValue="" ) int inputCode,
 							HttpServletRequest request){
 		int code=(int)request.getSession().getAttribute("code");
+		System.out.println("input Code: " + inputCode);
+		System.out.println("code: "+ code);
 		return JSONResult.success(userService.checkCode(inputCode,code)? "yes":"no");
 	}
 }
