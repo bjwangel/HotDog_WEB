@@ -104,7 +104,7 @@
     			
     			code=$("#inputCode").val();
             	
-    			if(code==""){
+    			if(code==""){	
     				return;
     			}
             	

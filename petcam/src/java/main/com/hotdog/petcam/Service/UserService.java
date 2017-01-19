@@ -1,5 +1,7 @@
 package com.hotdog.petcam.Service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -34,5 +36,12 @@ public class UserService {
 		else{
 			return false;
 		}
+	}
+	
+	public List<UserVo> getMainUserList(){
+		return userDao.getMainUserList();
+	}
+	public List<UserVo> getMainMyUserList(){
+		return userDao.getMainMyUserList();
 	}
 }
