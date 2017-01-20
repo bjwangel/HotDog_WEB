@@ -38,6 +38,13 @@ public class BoardDao {
 		return sqlSession.selectList("board.getList", map);
 	}
 	
+	public BoardVo getView(int board_no){
+		return sqlSession.selectOne("board.getView", board_no);
+	}
+	
+	
+	
+	// 메인페이지 에 뿌려줄 리스트들...
 	public List<BoardVo> getMainBoardList(){
 		return sqlSession.selectList("board.getMainBoardList");
 	}

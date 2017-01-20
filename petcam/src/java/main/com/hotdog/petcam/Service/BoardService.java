@@ -15,8 +15,7 @@ public class BoardService {
 	private static final int LIST_SIZE= 10;
 	private static final int PAGE_SIZE= 10;
 	
-	@Autowired 
-	private BoardDao boardDao;
+	@Autowired  BoardDao boardDao;
 	
 	// 메인 사이트 게시판 리스트 ... ( 블로그의 경우 검색조건 대신 공개여부를 파라미터로 받아야한다.)
 	public Map<String,Object> getTotalList(int category,int searchGroup,String search,int page){
@@ -62,6 +61,11 @@ public class BoardService {
 		
 		return map;
 	}
+	// 글 가져오기 
+	public BoardVo getView(int board_no){
+		return boardDao.getView(board_no);
+	}
+	
 	
 	// Main page를 위한 List 뽑아오기
 	public List<BoardVo> getMainBoardList(){
