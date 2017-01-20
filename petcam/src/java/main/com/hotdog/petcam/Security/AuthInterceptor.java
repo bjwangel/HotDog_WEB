@@ -24,6 +24,7 @@ public class AuthInterceptor extends HandlerInterceptorAdapter {
 
 		// 1. Auth 가  Type(Class)에 붙어 있는지 ?
 		boolean isTypeAnnotationAuth = false;
+		
 		for (Annotation annotation : ((HandlerMethod)handler).getBeanType().getDeclaredAnnotations()) {
 //			System.out.println( Auth.class.getName()  + " : " + annotation  );
 			
@@ -51,6 +52,9 @@ public class AuthInterceptor extends HandlerInterceptorAdapter {
 		request.setAttribute("callback",request.getRequestURI());
 //		System.out.println("^^^^^^^^^^^^^^   " + request.getRequestURI());
 		
+		
+		
+		// callback 위한 체크
 		if(session== null){
 			System.out.println("session");
 			

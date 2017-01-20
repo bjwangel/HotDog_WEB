@@ -34,4 +34,13 @@ public class UserController {
 		System.out.println("code: "+ code);
 		return JSONResult.success(userService.checkCode(inputCode,code)? "yes":"no");
 	}
+	
+	// *********************************************************************
+	// *************************** Modify **********************************
+	// *********************************************************************
+	// My Account 내부 Menu bar 를 include에 포함시켜서  URL 매핑을 할까??
+	
+	
+	
+	
 }

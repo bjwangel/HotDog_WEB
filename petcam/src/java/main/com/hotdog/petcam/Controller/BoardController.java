@@ -35,7 +35,7 @@ public class BoardController {
 		
 		Map<String,Object> map = boardService.getTotalList(category,searchGroup,search,page);
 		model.addAttribute("map", map);
-		return "";
+		return "board/main";
 	}
 	
 	// 게시판 리스트에 BoardVo 뿌려져 있으니까 model 하나 받아와서 뷰 구성 ( 댓글도 뿌리고 ajax 통신 )
@@ -47,7 +47,7 @@ public class BoardController {
 					   @RequestParam(value="search",required=true,defaultValue="" )String search){
 		
 		model.addAttribute("boardVo", boardService.getView(boardVo.getBoard_no())); // @Modelattribute boardVo가 no를 포함한채 잘 들어왓나?
-		model.addAttribute("commentList",commentService.getBoardComment(boardVo.getBoard_no())); // Comment 가져오기
+		model.addAttribute("commentList",commentService.getBoardComment(boardVo.getBoard_no())); // Comment List가져오기
 		model.addAttribute("page", page);
 		model.addAttribute("search",search);
 		return "";
