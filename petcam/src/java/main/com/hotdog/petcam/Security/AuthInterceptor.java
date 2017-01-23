@@ -34,7 +34,6 @@ public class AuthInterceptor extends HandlerInterceptorAdapter {
 		}
 		
 		if( isTypeAnnotationAuth == false ){
-//			System.out.println( "----------------------> " + isTypeAnnotationAuth );
 			
 			// 2. Auth 가  Method에 붙어 있는지 ?
 			Auth auth=((HandlerMethod)handler).getMethodAnnotation(Auth.class);

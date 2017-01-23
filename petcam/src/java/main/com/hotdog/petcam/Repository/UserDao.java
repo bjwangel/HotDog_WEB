@@ -8,6 +8,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.hotdog.petcam.VO.PetVo;
 import com.hotdog.petcam.VO.UserVo;
 
 @Repository
@@ -57,5 +58,18 @@ public class UserDao {
 	}
 	public List<UserVo> getMainMyUserList(){
 		return sqlSession.selectList("user.getMainMyUserList");
+	}
+	// *******************************************************************************************************
+	// **************************************** My Account ***************************************************
+	// *******************************************************************************************************
+	
+	public void basicModify(UserVo userVo){
+		sqlSession.update("user.basicModify", userVo);
+	}
+	public void userProfileModify(UserVo userVo){
+		sqlSession.update("user.userprofileModify",userVo);
+	}
+	public void petrProfileModify(PetVo petVo){
+		sqlSession.update("user.userprofileModify",petVo);
 	}
 }

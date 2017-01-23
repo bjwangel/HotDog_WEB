@@ -98,12 +98,21 @@
 			<bean class="com.hotdog.petcam.Security.AuthSignUpInterceptor" />
 		</mvc:interceptor>
 		<mvc:interceptor>
+			<mvc:mapping path="/user/account/**" />
+			<bean class="com.hotdog.petcam.Security.secretInterceptor" />
+		</mvc:interceptor>
+		<mvc:interceptor>
 			<mvc:mapping path="/**" />
 			<mvc:exclude-mapping path="/user/login" />
 			<mvc:exclude-mapping path="/user/logout" />
 			<mvc:exclude-mapping path="/user/signupform" />
 			<mvc:exclude-mapping path="/assets/**" />
 			<bean class="com.hotdog.petcam.Security.AuthInterceptor" />
+		</mvc:interceptor>
+		<mvc:interceptor>
+			<mvc:mapping path="/**"/>		
+			<mvc:exclude-mapping path="/user/account/**"/>
+			<bean class="com.hotdog.petcam.Security.SecretInterceptor"/>
 		</mvc:interceptor>
 	</mvc:interceptors>
 
