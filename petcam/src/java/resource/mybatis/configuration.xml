@@ -3,10 +3,12 @@
 <configuration>
 	<typeAliases>
 		<typeAlias alias="uservo" type="com.hotdog.petcam.VO.UserVo"/>
+		<typeAlias alias="blogvo" type="com.hotdog.petcam.VO.BlogVo"/>
 	</typeAliases>
 	
 	<mappers>
 		<mapper resource="mybatis/mappers/user.xml" />
+		<mapper resource="mybatis/mappers/blog.xml" />
 	</mappers>
 	
 	

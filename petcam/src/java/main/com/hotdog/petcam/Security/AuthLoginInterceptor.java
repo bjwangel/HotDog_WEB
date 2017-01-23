@@ -15,35 +15,32 @@ public class AuthLoginInterceptor extends HandlerInterceptorAdapter {
 
 	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler /* handler Method*/ ) throws Exception {
-		UserVo userVo=new UserVo();
-//		System.out.println("------------>>>>> " + request.getRequestURI());
+		String email = request.getParameter( "email" );
+		String password = request.getParameter( "pass_word" );
+		String nickname = request.getParameter("nickname");
 		
-		userVo.setEmail(request.getParameter("email"));
-		userVo.setPass_word(request.getParameter("password"));
-		// 여기까지 request 정보를 받아서 컨테이너에 UserService를 사용해야한다.
+		// Web Application Context 받아오기
+		ApplicationContext ac =
+			WebApplicationContextUtils.getWebApplicationContext( request.getServletContext() );
 		
-		// Web Application Context 받아오기.. 컨테이너 사용 매개변수로  servlet context 를 전해줌
-		ApplicationContext ac = WebApplicationContextUtils.getWebApplicationContext(request.getServletContext());
+		// Container 안에 있는 UserService Bean(객체) 받아오기
+		UserService userService = ac.getBean( UserService.class );
 		
-		UserService userService = ac.getBean(UserService.class);
-
+		// 데이터베이스에서 해당 UserVo 받아오기 
+		UserVo userVo = userService.login(email, password, nickname);
 		
+		// 이메일과 패쓰워드가 일치하지 않는 경우
+		if( userVo == null ) {
+			response.sendRedirect( 
+				request.getContextPath() + "/user/loginform?result=fail" );
+			
+			return false;
+		}
 		
-		// 데이터베이스에서 해당 UserVo 받아오기
-		 UserVo userVo2=userService.login(userVo);
-			if(userVo2==null){
-				// 이메일과 비밀번호가 일치하지 않는경우 
-				response.sendRedirect(request.getContextPath()+"/user/loginform?result=fail");
-				return false;
-			}
-		
-		// 인증처리
-		HttpSession session = request.getSession(true);
-		session.setAttribute("authUser", userVo2);
-		
-		response.sendRedirect(request.getContextPath());
-		
-//		System.out.println("AuthLoginInterceptor.preHandle called");
+		// 인증 처리
+		HttpSession session = request.getSession( true );
+		session.setAttribute( "authUser", userVo );
+		response.sendRedirect( request.getContextPath() );
 		return false;
 	}
 
